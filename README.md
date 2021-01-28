@@ -263,3 +263,90 @@ Java的标准库已经内置了排序功能 Arrays.sort()
         };
 ```
 
+要打印一个二维数组，可以使用两层嵌套的for循环：
+
+```java
+for (int[] arr : ns) {
+    for (int n : arr) {
+        System.out.print(n);
+        System.out.print(', ');
+    }
+    System.out.println();
+}
+```
+
+# 面向对象编程
+
+基本概念:  
+类
+实例
+方法
+
+实现方式:  
+继承
+多态
+
+Java语言本身提供的机制:  
+package
+classpath
+jar
+
+核心类:  
+字符串
+包装类型
+JavaBean
+枚举
+常用工具类
+
+完全可以理解并掌握面向对象的基本思想
+
+类（class）(抽象,归类), 实例（instance）(具体)  
+class Person { };---------Person ming = new Person()  
+class Book { }------------Book book1 = new Book()
+
+创建实例
+
+```java
+Person ming = new Person();
+```
+
+注意区分Person ming是定义Person类型的变量ming，  
+而new Person()是创建Person实例。
+
+使用方法（method）来让外部代码可以间接修改private field：  
+外部代码可以调用方法setName()和setAge()来间接修改private字段。  
+通过getName()和getAge()间接获取private字段的值。
+
+调用方法的语法是实例变量.方法名(参数);。例如：ming.setName("Xiao Ming");。
+
+定义方法
+
+```java
+修饰符 方法返回类型 方法名(方法参数列表) {
+    若干方法语句;
+    return 方法返回值;
+}
+```
+
+this变量 指向当前实例
+
+this.field 访问当前实例的字段
+
+当局部变量和字段重名，那么局部变量优先级更高
+
+方法的参数
+
+预设 调用方法的参数变量
+
+可变参数
+
+```java
+    public void setNames(String... names) {
+        this.names = names;
+    }
+```
+
+基本类型参数的传递，是调用方值的复制。
+
+引用类型参数的传递，调用方的变量，和接收方的参数变量，指向的是同一个对象。
+
