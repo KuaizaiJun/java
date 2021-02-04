@@ -108,7 +108,7 @@ int[] ns = new int[] { 68, 79, 91, 85, 62 };
 int[] ns = { 68, 79, 91, 85, 62 };
 ```
 
-字符串数组: 
+字符串数组:
 
 ```java
 String[] names = {
@@ -119,7 +119,7 @@ names[1] = "cat";
 
 ## 流程语句
 
-输入和输出: 格式化输出 ("%.2f", d); 
+输入和输出: 格式化输出 ("%.2f", d);
 
 ### 输入
 
@@ -234,7 +234,7 @@ continue则是提前结束本次循环，直接继续执行下次循环
 
 ## 数组操作
 
-遍历数组: for循环, for each, 
+遍历数组: for循环, for each,
 
 打印数组: 打印地址, Arrays.toString()
 
@@ -275,7 +275,7 @@ for (int[] arr : ns) {
 }
 ```
 
-# 面向对象编程
+## 面向对象编程
 
 基本概念:  
 类
@@ -350,3 +350,175 @@ this.field 访问当前实例的字段
 
 引用类型参数的传递，调用方的变量，和接收方的参数变量，指向的是同一个对象。
 
+构造方法
+
+初始化方法
+
+```java
+Person ming = new Person();
+ming.setName("小明");
+ming.setAge(12);
+```
+
+由于构造方法是如此特殊，所以构造方法的名称就是类名。构造方法的参数没有限制，在方法内部，也可以编写任意语句。但是，和普通方法相比，构造方法没有返回值（也没有void），调用构造方法，必须用new操作符。
+
+```java
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+```
+
+如果既要能使用带参数的构造方法，又想保留不带参数的构造方法，那么只能把两个构造方法都定义出来：
+
+```java
+    private String name;
+    private int age;
+
+    public Person() {
+    }
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+```
+
+多构造方法  
+可以定义多个构造方法，在通过new操作符调用的时候，编译器通过构造方法的参数数量、位置和类型自动区分：
+
+一个构造方法可以调用其他构造方法，这样做的目的是便于代码复用。调用其他构造方法的语法是this(…)：
+
+有参数有所不
+
+继承
+
+首先可以复用代码
+
+子类无法访问父类的private字段或者private方法。
+
+用protected修饰的字段可以被子类访问, 把字段和方法的访问权限控制在继承树内部
+
+任何class的构造方法，第一行语句必须是调用父类的构造方法。
+
+向上转型
+
+Person p = new Student(); // ???
+
+多态
+
+在继承关系中，子类如果定义了一个与父类方法签名完全相同的方法，被称为覆写（Override）。
+
+引用变量的声明类型可能与其实际类型不符，例如：
+
+Person p = new Student();
+
+Java的实例方法调用是基于运行时的实际类型的动态调用，而非变量的声明类型。
+
+## 上面的错了
+
+## 面向对象基本概念
+
+人 -> 抽象 -> 类 class  
+小明 -> 具体的人 -> 实例 instance  
+书 -> 抽象 -> 类 class  
+
+### 创建一个类 -- 包含定义字段 field , 控制语句
+
+```java
+class Person {
+    public String name;
+    public int age;
+}
+
+class Book {
+    public String name;
+    public String author;
+    public String ISBN;
+    public double price;  //价格
+}
+```
+
+### 创建实例 -- 然后定义变量指向该实例
+
+new 创建实例  
+var 定义引用变量指向该实例
+
+注意等式 = 语句的逻辑顺序, 是先运算右边的, 再赋值左边的;
+
+### 访问变量 -- 对实例赋值
+
+```java
+ming.name = "小明";
+ming.age = 12;
+```
+
+## 方法 method
+
+### 封装字段 -- 拒绝外部直接访问
+
+```java
+public int age;  //允许外部访问
+private String name;  //拒绝外部访问
+```
+
+### 使用方法 method 间接访问, 修改字段 field
+
+```java
+private String name;
+
+public String getName(){  //返回 return 字符串引用类型
+    return this.name;  //this指向本类, name是类的字段
+}
+
+public void setName(String name){
+    this.name = name;
+}
+
+### 调用语法 实例.方法(参数);
+
+### 定义方法
+
+```java
+访问类型 返回类型 方法名 (传入参数列表) {
+    语句;
+    return 返回;
+}
+```
+
+private 方法
+
+### this 变量
+
+局部变量与字段重名, 此时,局部变量优先级更高, 要访问字段就要加上this
+
+this.name = name  //前面访问字段, 后面访问局部变量
+
+### 方法参数
+
+按照定义顺序, 一一传递
+
+### 可变参数
+
+```java
+class Group {
+    private String[] names;
+u
+    public void setNames(String... names) {
+        this.names = names;
+    }
+}
+```
+
+调用时
+
+```java
+Group g = new Group();
+g.setNames("Xiao Ming", "Xiao Hong", "Xiao Jun"); // 传入3个String
+g.setNames("Xiao Ming", "Xiao Hong"); // 传入2个String
+g.setNames("Xiao Ming"); // 传入1个String
+g.setNames(); // 传入0个String
+```
