@@ -522,3 +522,267 @@ g.setNames("Xiao Ming", "Xiao Hong"); // 传入2个String
 g.setNames("Xiao Ming"); // 传入1个String
 g.setNames(); // 传入0个String
 ```
+
+基本类型参数的传递，是调用方值的复制。双方各自的后续修改，互不影响。
+
+引用类型参数的传递，调用方的变量，和接收方的参数变量，指向的是同一个对象。双方任意一方对这个对象的修改，都会影响对方（因为指向同一个对象嘛）。
+
+传入字符串: p.setName(bob)  // p.name -> "Bob"
+
+传入字符串数组: p.setName(fullname); //p.name[0] -> fullname[0] -> "Homer"
+
+## 构造方法
+
+在主类创建实例时, 初始化实例的字段
+
+未调用方法时, 字段状态不正确
+
+创建实例时通过构造方法初始化实例
+
+```java
+public Person(String name, int age) {
+    this.name = name;
+    this.age = age;
+}
+```
+
+构造方法名是类名, 没有返回值, 调用构造方法, 必须用new操作符
+
+### 多构造方法
+
+通过 new 创建方法的时候, 通过构造方法的参数数量, 位置和类型自动区分;
+
+```java
+class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public Persong(String name) {
+        this.name = name;
+        this.age = 12;
+    }
+
+    public Person() {
+    }
+}
+```
+
+this 代表了 本方法名
+
+```java
+class Person {
+    private String name;
+    private int age;
+
+    public Person(Sting name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public Person(Sting name) {
+        this(name, 18);
+    }
+
+    public Person() {
+        this.("Unname");
+    }
+}
+```
+
+## 方法重载 --参数不一样, 方法名相同, 返回类型通常相同
+
+```java
+class Hello {
+    public void hello() {
+        System.out.println("hello, world!");
+    }
+
+    public void hello(String name) {
+        Systen.out.println("hi, " + name + "!");
+    }
+
+    public void hello(String name, int age) {
+        if(age < 18) {
+            System.out.println("hello, " + name + "!");
+        } else {
+            System.out.println("hi, " + name + "!");
+        }
+    }
+}
+```
+
+## 继承 --复用代码 extends
+
+```java
+class Person {
+    private String name;
+    private int age;
+    
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+
+class Student extends Person {
+    private int score;
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getScore() {
+        return score;
+    }
+}
+```
+
+Student extends Person extends Object;
+
+protected 修饰的字段 可以被子类访问;
+
+### super 关键字 表示父类方法名, 用来访问父类字段
+
+在构造方法 (与类名相同的方法, 无返回值) 中, 第一行自动添加为super();
+
+子类不继承父类的构造方法
+
+### 阻止继承 final class
+
+### 指定继承 
+
+```java
+public sealed class Person permits Student, Teacher {
+
+}
+```
+
+### 向上转型  --子类实例声明为父类 父类引用变量指向子类的实例
+
+String s = s;
+
+### 向下转型
+
+```java
+Person p = new Student();
+Student s = (Student) p;
+```
+
+### 区分继承和组合
+
+### 多态 Polymorphic
+
+在继承关系中, 子类定义了定义了一个与父类方法 完全相同 的方法,被称为覆写 override, 方法名相同, 参数不同,则称为重载 overload
+
+```java
+class Person {
+    public void run() {
+        System.out.println("Person.run");
+    }
+}
+```
+
+```java
+class Student extends Person {
+    @Override
+    public void run() {
+        System.out.println("Student.run");
+    }
+}
+```
+
+Java的实例方法调用是基于运行时的实际类型的动态调用，而非变量的声明类型。这就是多态
+
+## 多态
+
+针对某个类型的方法调用，其真正执行的方法取决于运行时期实际类型的方法。多态的特性就是，运行期才能动态决定调用的子类方法。对某个类型调用某个方法，执行的实际方法可能是某个子类的覆写方法。
+
+多态具有一个非常强大的功能，就是允许添加更多类型的子类实现功能扩展，却不需要修改基于父类的代码。
+
+加上@Override可以让编译器帮助检查是否进行了正确的覆写。
+
+## 覆写 Object方法
+
+所有的类 class 最终都继承自Object, 而Object定义了几个重要的方法:
+
+toString(): 把实例 instance输出为String;
+
+equals(): 判断两个instance是否逻辑相等;
+
+hashCode(): 计算一个instance的哈希值
+
+## 调用super
+
+```java
+        class Person {
+            protected String name;
+            public String hello() {
+                return "Hello, " + name;
+            }
+        }
+
+        Student extends Person {
+            @Override
+            public String hello() {
+                return super.hello() + "!";
+            }
+        }
+```
+
+final 修饰的方法不能被覆写 Override:
+
+```java
+        class Person {
+            protected String name;
+            public final String hello() {
+                return "Hello, " + name;
+            } 
+        }
+
+        class Student extends Person {
+            @Override
+            public String hello() {
+            }
+        }
+```
+
+final 修饰的类不能被继承:
+
+```java
+        final class Person {
+            protected String name;
+        }
+
+        class Student extends Person {
+        }
+```
+
+final 修饰的字段在初始化后不能被修改.
+
+class Person {
+    public final String name = "Unnamed"
+}
+
+可以在构造方法中初始化final字段:
+
+```java
+        class Person {
+            protected final String name;
+            public setPersonName(String name) {
+                this.name = name;
+            }
+        }
+```
+
